@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashLandFA - Script Verification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #8b0000;
+            --bg-black: #050505;
+            --text-white: #ffffff;
+            --neon-glow: 0 0 10px var(--primary-red), 0 0 20px var(--primary-red), 0 0 40px var(--primary-red);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a0000 0%, #000000 100%);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .brand-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            text-shadow: 0 0 5px var(--dark-red);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section {
+            margin-bottom: 50px;
+            perspective: 1000px;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+            animation: floatLogo 6s ease-in-out infinite;
+        }
+
+        .logo-img {
+            width: 250px;
+            height: auto;
+            max-width: 80vw;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+            transition: transform 0.1s ease-out;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards 0.5s;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards 0.8s;
+        }
+
+        .download-section {
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards 1.1s;
+        }
+
+        .cta-button {
+            position: relative;
+            display: inline-block;
+            padding: 20px 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--primary-red);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .cta-button:hover {
+            color: #fff;
+            background: var(--primary-red);
+            box-shadow: var(--neon-glow);
+            transform: scale(1.05);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-subtext {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+            border-top: 1px solid #222;
+        }
+
+        .footer-links a {
+            color: #888;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-red);
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px var(--dark-red); }
+            50% { box-shadow: 0 0 25px var(--primary-red); }
+            100% { box-shadow: 0 0 10px var(--dark-red); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .logo-img { width: 180px; }
+            .cta-button { padding: 15px 30px; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <header>
+        <div class="brand-text">FLASHLAND FA</div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="logo-container" id="parallax-logo">
+                <img src="FL.png" alt="FlashLand Clown Logo" class="logo-img">
+            </div>
+            
+            <h1 class="hero-title">BIENVENUE SUR FLASHLAND</h1>
+            <p class="hero-subtitle">Le système de vérification anti-cheater de FlashLandFA.</p>
+        </section>
+
+        <section class="download-section">
+            <a href="FLVerification.bat" download class="cta-button">
+                TÉLÉCHARGER LE SCRIPT
+            </a>
+            <span class="cta-subtext">Version 1.0 • FLVerification.bat • Sécurisé</span>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://discord.gg/flashlandfa">Discord</a>
+            <a href="https://discord.gg/flashlandfa">Support</a>
+            <a href="https://staff.flashland.fr/accueil/accueil.php">Règlement</a>
+        </div>
+        <br>
+        <p>&copy; 2026 FlashLandFA. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * -1.5 - 0.5;
+                this.color = `rgba(${Math.floor(Math.random() * 55 + 200)}, 0, 0, ${Math.random() * 0.5 + 0.1})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.size > 0.2) this.size -= 0.01;
+                if (this.y < 0 || this.size <= 0.2) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height + 10;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedY = Math.random() * -1.5 - 0.5;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        initParticles();
+        animateParticles();
+
+        const logoContainer = document.getElementById('parallax-logo');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth - e.pageX * 2) / 50;
+            const y = (window.innerHeight - e.pageY * 2) / 50;
+
+            if(logoContainer) {
+                logoContainer.style.transform = `translateX(${x}px) translateY(${y}px)`;
+            }
+        });
+
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            document.removeEventListener('mousemove', null);
+        }
+    </script>
+</body>
+</html>
