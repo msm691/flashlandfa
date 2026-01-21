@@ -6,7 +6,7 @@
     <title>FlashLandFA - Script Verification</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:wght@400;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -15,6 +15,7 @@
             --bg-black: #050505;
             --text-white: #ffffff;
             --neon-glow: 0 0 10px var(--primary-red), 0 0 20px var(--primary-red), 0 0 40px var(--primary-red);
+            --terminal-bg: #0a0000;
         }
 
         * {
@@ -72,23 +73,23 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
+            padding: 90px 20px 20px 20px;
             position: relative;
             z-index: 1;
         }
 
         .hero-section {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             perspective: 1000px;
         }
 
         .logo-container {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             animation: floatLogo 6s ease-in-out infinite;
         }
 
         .logo-img {
-            width: 250px;
+            width: 220px;
             height: auto;
             max-width: 80vw;
             filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
@@ -115,6 +116,7 @@
         }
 
         .download-section {
+            margin-bottom: 50px;
             opacity: 0;
             animation: fadeInUp 1s ease-out forwards 1.1s;
         }
@@ -167,12 +169,92 @@
             font-style: italic;
         }
 
+        .terminal-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            background-color: var(--terminal-bg);
+            border: 1px solid var(--dark-red);
+            border-radius: 5px;
+            padding: 15px;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards 1.1s;
+        }
+        
+        .terminal-header {
+             display: flex;
+             align-items: center;
+             margin-bottom: 10px;
+             border-bottom: 1px solid #330000;
+             padding-bottom: 5px;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 5px;
+            margin-right: 10px;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #333;
+        }
+        .terminal-dot.red { background-color: #ff5f56; }
+        .terminal-dot.yellow { background-color: #ffbd2e; }
+        .terminal-dot.green { background-color: #27c93f; }
+
+        .terminal-title {
+            color: #666;
+            font-size: 0.75rem;
+        }
+
+        .terminal-content {
+            height: 120px;
+            overflow-y: auto;
+            color: #ff4444;
+            scrollbar-width: thin;
+            scrollbar-color: var(--dark-red) var(--terminal-bg);
+        }
+
+        .terminal-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .terminal-content::-webkit-scrollbar-track {
+            background: var(--terminal-bg);
+        }
+        .terminal-content::-webkit-scrollbar-thumb {
+            background-color: var(--dark-red);
+        }
+
+        .terminal-line {
+            margin-bottom: 4px;
+            opacity: 0;
+            animation: fadeInTerminal 0.2s forwards;
+        }
+        
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: var(--primary-red);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+
         footer {
             padding: 30px;
             text-align: center;
             font-size: 0.9rem;
             color: #555;
             border-top: 1px solid #222;
+            background-color: rgba(0,0,0,0.5);
         }
 
         .footer-links a {
@@ -192,26 +274,24 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInTerminal {
+            to { opacity: 1; }
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 10px var(--dark-red); }
-            50% { box-shadow: 0 0 25px var(--primary-red); }
-            100% { box-shadow: 0 0 10px var(--dark-red); }
+        @keyframes blink {
+             0%, 100% { opacity: 1; }
+             50% { opacity: 0; }
         }
 
         @media (max-width: 768px) {
             .hero-title { font-size: 2rem; }
-            .logo-img { width: 180px; }
+            .logo-img { width: 160px; }
             .cta-button { padding: 15px 30px; font-size: 1.2rem; }
+            .terminal-container { max-width: 90%; }
         }
     </style>
 </head>
@@ -230,7 +310,7 @@
             </div>
             
             <h1 class="hero-title">BIENVENUE SUR FLASHLAND</h1>
-            <p class="hero-subtitle">Le système de vérification anti-cheater de FlashLandFA.</p>
+            <p class="hero-subtitle">Le système de vérification ultime pour votre expérience RP.</p>
         </section>
 
         <section class="download-section">
@@ -239,6 +319,20 @@
             </a>
             <span class="cta-subtext">Version 1.0 • FLVerification.exe • Sécurisé</span>
         </section>
+
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                </div>
+                <span class="terminal-title">root@flashland-server:~# status_check.sh</span>
+            </div>
+            <div class="terminal-content" id="terminal-output">
+            </div>
+        </div>
+
     </main>
 
     <footer>
@@ -254,9 +348,7 @@
     <script>
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
-
         let particlesArray;
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
@@ -269,11 +361,9 @@
                 this.speedY = Math.random() * -1.5 - 0.5;
                 this.color = `rgba(${Math.floor(Math.random() * 55 + 200)}, 0, 0, ${Math.random() * 0.5 + 0.1})`;
             }
-
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-
                 if (this.size > 0.2) this.size -= 0.01;
                 if (this.y < 0 || this.size <= 0.2) {
                     this.x = Math.random() * canvas.width;
@@ -282,7 +372,6 @@
                     this.speedY = Math.random() * -1.5 - 0.5;
                 }
             }
-
             draw() {
                 ctx.fillStyle = this.color;
                 ctx.beginPath();
@@ -307,30 +396,61 @@
             }
             requestAnimationFrame(animateParticles);
         }
-
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             initParticles();
         });
-
         initParticles();
         animateParticles();
 
         const logoContainer = document.getElementById('parallax-logo');
-        
         document.addEventListener('mousemove', (e) => {
             const x = (window.innerWidth - e.pageX * 2) / 50;
             const y = (window.innerHeight - e.pageY * 2) / 50;
-
-            if(logoContainer) {
-                logoContainer.style.transform = `translateX(${x}px) translateY(${y}px)`;
-            }
+            if(logoContainer) logoContainer.style.transform = `translateX(${x}px) translateY(${y}px)`;
         });
-
         if (window.matchMedia("(max-width: 768px)").matches) {
             document.removeEventListener('mousemove', null);
         }
+
+        const terminalOutput = document.getElementById('terminal-output');
+        const logMessages = [
+            "> Initializing FlashLandFA Environment...",
+            "> Loading core modules...",
+            "[OK] Network secured.",
+            "> Checking FLVerification.bat integrity...",
+            "[OK] Hash matched: 0xFB45A9.",
+            "> Establishing secure tunnel to server...",
+            "... Connection established.",
+            "> Waiting for user action (Download)...",
+            "_ Awaiting input..."
+        ];
+
+        let lineIndex = 0;
+
+        function typeLine() {
+            if (lineIndex < logMessages.length) {
+                const newLine = document.createElement('div');
+                newLine.classList.add('terminal-line');
+                newLine.textContent = logMessages[lineIndex];
+                
+                if (lineIndex === logMessages.length - 1) {
+                     const cursor = document.createElement('span');
+                     cursor.classList.add('cursor-blink');
+                     newLine.appendChild(cursor);
+                }
+                
+                terminalOutput.appendChild(newLine);
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                
+                lineIndex++;
+                setTimeout(typeLine, Math.random() * 500 + 200);
+            }
+        }
+
+        setTimeout(typeLine, 1500);
+
     </script>
 </body>
 </html>
